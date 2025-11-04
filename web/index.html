@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Tracker - Login/Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>💰 Expense Tracker</h2>
+
+    <div id="forms">
+      <div id="loginForm">
+        <h3>Login</h3>
+        <input id="loginUsername" placeholder="Username">
+        <input id="loginPassword" type="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+      </div>
+
+      <div id="registerForm">
+        <h3>Register</h3>
+        <input id="regUsername" placeholder="Username">
+        <input id="regEmail" placeholder="Email">
+        <input id="regPassword" type="password" placeholder="Password">
+        <input id="regFullName" placeholder="Full Name">
+        <button onclick="register()">Register</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  async function register() {
+    const formData = new URLSearchParams();
+    formData.append("username", document.getElementById("regUsername").value);
+    formData.append("email", document.getElementById("regEmail").value);
+    formData.append("password", document.getElementById("regPassword").value);
+    formData.append("fullName", document.getElementById("regFullName").value);
+
+    const res = await fetch("http://localhost:8080/register", {
+      method: "POST",
+      body: formData
+    });
+    alert(await res.text());
+  }
+
+  async function login() {
+    const formData = new URLSearchParams();
+    formData.append("username", document.getElementById("loginUsername").value);
+    formData.append("password", document.getElementById("loginPassword").value);
+
+    const res = await fetch("http://localhost:8080/login", {
+      method: "POST",
+      body: formData
+    });
+    const text = await res.text();
+    alert(text);
+
+    if (text.includes("✅")) {
+      // Save user info (simple for now)
+      localStorage.setItem("username", document.getElementById("loginUsername").value);
+      window.location.href = "dashboard.html";
+    }
+  }
+  </script>
+</body>
+</html>

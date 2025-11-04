@@ -1,0 +1,38 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #ffffff, #e6f0ff);
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+}
+
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+.text-field, .combo-box {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #b0c4de;
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 8;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to bottom right, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #3399ff, #0066cc);
+}
+
+.text-area {
+    -fx-control-inner-background: #ffffff;
+    -fx-border-color: #b0c4de;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}

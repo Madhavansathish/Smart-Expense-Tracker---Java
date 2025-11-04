@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome, <span id="username"></span>!</h2>
+    <h3>Add Expense</h3>
+
+    <input id="userId" placeholder="User ID (try 1)">
+    <input id="categoryId" placeholder="Category ID (1–5)">
+    <input id="amount" placeholder="Amount">
+    <input id="description" placeholder="Description">
+    <button onclick="addExpense()">Add Expense</button>
+
+    <hr>
+    <button onclick="loadExpenses()">Show My Expenses</button>
+
+    <ul id="expenseList"></ul>
+  </div>
+
+  <script>
+  document.getElementById("username").innerText = localStorage.getItem("username") || "User";
+
+  async function addExpense() {
+    const formData = new URLSearchParams();
+    formData.append("userId", document.getElementById("userId").value);
+    formData.append("categoryId", document.getElementById("categoryId").value);
+    formData.append("amount", document.getElementById("amount").value);
+    formData.append("description", document.getElementById("description").value);
+
+    const res = await fetch("http://localhost:8080/addExpense", {
+      method: "POST",
+      body: formData
+    });
+    alert(await res.text());
+  }
+
+  async function loadExpenses() {
+    const userId = document.getElementById("userId").value;
+    const res = await fetch(`http://localhost:8080/getExpenses?userId=${userId}`);
+    const data = await res.json();
+
+    const list = document.getElementById("expenseList");
+    list.innerHTML = "";
+    data.forEach(e => {
+      const li = document.createElement("li");
+      li.textContent = `${e.date} - ${e.category}: ₹${e.amount} (${e.desc})`;
+      list.appendChild(li);
+    });
+  }
+  </script>
+</body>
+</html>
